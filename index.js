@@ -18,7 +18,7 @@ const Customer = require('./models/customer');
 // Add Customer
 const addCustomer = (customer) => {
   Customer.create(customer).then((customer) => {
-    console.info('New CUstomer Added');
+    console.info('New Customer added');
     mongoose.connection.close();
   });
 };
@@ -36,8 +36,37 @@ const findCustomer = (name) => {
   );
 };
 
+// Update Customer
+const updateCustomer = (_id, customer) => {
+  Customer.updateOne({ _id }, customer).then((customer) => {
+    console.info('Customer updated.');
+    mongoose.connection.close();
+  });
+};
+
+// Remove Customer
+const removeCustomer = (_id) => {
+  Customer.deleteOne({ _id }).then((customer) => {
+    console.info('Customer removed.');
+    mongoose.connection.close();
+  });
+};
+
+// List all Customers
+const listCustomers = () => {
+  Customer.find().then((customers) => {
+    console.info(customers);
+    if (customers.length !== 1) console.info(`${customers.length} customers.`);
+    else console.info(`${customers.length} customer.`);
+    mongoose.connection.close();
+  });
+};
+
 // Export All Methods
 module.exports = {
   addCustomer,
   findCustomer,
+  updateCustomer,
+  removeCustomer,
+  listCustomers,
 };
